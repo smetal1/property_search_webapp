@@ -1,0 +1,559 @@
+<html>
+
+<head>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<script src="jquery.selectric.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+	<link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="selectric.css">
+
+	<style>
+		@font-face{font-family:'Graphik-Regular';src:url("./Graphik-Regular.otf")}
+		@font-face{font-family:'Graphik-Medium';src:url("./Graphik-Medium.otf")}
+
+		header
+			{
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: space-between;
+			border-bottom: 2px solid #d9d9d9;
+			}
+
+		nav
+			{
+			font-family: 'Graphik-Regular', sans-serif;
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 22px;
+			color: #707372;
+			text-align: center;
+			}
+
+		ul
+			{
+			list-style: none;
+			}
+
+		li
+			{
+			display: inline-block;
+			padding: 0 10px;
+			}
+
+		h1
+			{
+			font-family: Graphik-Medium,sans-serif;
+			font-weight: 400;
+			font-size: 24px;
+			line-height: 24px;
+			color: #707372;
+			}
+
+		h3
+			{
+			font-family: Graphik-Medium,sans-serif;
+			font-weight: 400;
+			font-size: 16px;
+			line-height: 16px;
+			color: #3f3d3d;
+			}
+
+		p
+			{
+			margin: 5px;
+			font-family: 'Graphik-Regular', sans-serif;
+			font-size: 10px;
+			}
+
+		p.highlight
+			{
+			margin-bottom: 10px;
+			font-family: Graphik-Medium,sans-serif;
+			font-weight: 700;
+			font-size: 16px;
+			line-height: 16px;
+			}
+
+		.searchForm
+			{
+			display: flex;
+			flex-direction: col;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: center;
+			}
+
+		.searchFields
+			{
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: center;
+			}
+
+		.inputGroup
+			{
+			/* width: 100%; */
+			display: flex;
+			flex-direction: row;
+			}
+
+		.searchForm label
+			{
+			font-family: Graphik-Medium, sans-serif;
+			font-weight: 400;
+			font-size: 14px;
+			line-height: 20px;
+			display: block;
+			margin: 0 0 3px 2px;
+			}
+
+		.searchForm input
+			{
+			padding: 10px;
+			border: 0;
+			outline: 0;
+			background: #ffffff;
+			width: 100%;
+			height: 42px;
+			font-size: 16px;
+			line-height: 22px;
+			}
+
+		.inputArea
+			{
+			display: flex;
+			flex-direction: row;
+			background: #fff;
+			}
+
+		.fa-calendar,
+		.fa-map-marker
+			{
+			color: #3f3d3d;
+			height: 42px;
+			line-height: 40px;
+			font-size: 24px;
+			padding: 0 10px;
+			}
+
+		.hotelSelectButton
+			{
+			font-family: Graphik-Medium, sans-serif;
+			font-weight: 400;
+			font-size: 16px;
+			line-height: 22px;
+			color: #ffffff;
+			background: #d96932;
+			border: 0;
+			margin-top: 10px;
+			padding: 10px;
+			height: 40px;
+			width: 160px;
+			}
+
+		#searchButton
+			{
+			font-family: Graphik-Medium, sans-serif;
+			font-weight: 400;
+			font-size: 16px;
+			line-height: 22px;
+			color: #ffffff;
+			background: #d96932;
+			border: 0;
+			padding: 10px;
+			margin-top: 40px;
+			height: 42px;
+			min-width: 200px;
+			}
+
+		.searchInput
+			{
+			margin: 10px;
+			}
+
+		.input-stepper
+			{
+			border: 1px solid #ffffff;
+			display: inline-block;
+			}
+
+		.input-stepper button
+			{
+			background: #ffffff;
+			appearance: none;
+			border: none;
+			cursor: pointer;
+			font-size: 20px;
+			width: 40px;
+			height: 42px;
+			}
+
+		.input-stepper button[disabled]
+			{
+			cursor: not-allowed;
+			}
+
+		.input-stepper button[disabled] i
+			{
+			color: #ccc;
+			}
+
+		.input-stepper button i
+			{
+			color: #3f3d3d;
+			}
+
+		.input-stepper input
+			{
+			appearance: none;
+			border: none;
+			font-size: 18px;
+			line-height: 22px;
+			text-align: center;
+			width: 60px;
+			height: 42px;
+			background: #3f3d3d;
+			color: #ffffff;
+			}
+
+		.ratePreference
+			{
+			box-sizing: border-box;
+			height: 44px;
+			width: 300px;
+			color: black;
+			border: 0;
+			border-radius: 0;
+			}
+
+		.selectric .label
+			{
+			box-sizing: border-box;
+			padding-top: 10px;
+			font-size: 16px;
+			line-height: 22px;
+			min-height: 42px;
+			}
+
+		#searchSection
+			{
+			margin: 0;
+			padding: 1px 20px;
+			background: #fff;
+			}
+
+		.searchForm
+			{
+			margin: 0 0 20px 0;
+			padding: 20px;
+			border: 2px solid #3f3d3d;
+			background: #3f3d3d;
+			font-family: 'Graphik-Regular', 'sans-serif';
+			color: #ffffff;
+			max-width: 1170px;
+			}
+
+		#searchResults
+			{
+			padding: 0 20px 20px 20px;
+			font-family: 'Graphik-Regular', 'sans-serif';
+			font-size: 14px;
+			}
+
+		.hotelDetails
+			{
+			border-radius: 10px;
+			border: 1px solid #bfb8af;
+			overflow: hidden;
+			width: 100%;
+			display: flex;
+			flex-direction: col;
+			justify-content: space-between;
+			margin-bottom: 20px;
+			background: #fff;
+			color: #3f3d3d;
+			}
+
+		.hotelImage
+			{
+			width: 181px;
+			height: 146px;
+			}
+
+		.hotelInfo
+			{
+			flex-grow: 1;
+			padding: 10px;
+			}
+
+		.hotelPrice
+			{
+			flex-grow: 1;
+			padding: 10px 10px 10px 0;
+			text-align: center;
+			}
+
+		ul.hotelAmenities
+			{
+			padding: 0;
+			margin: 10px 0 0 0;
+			list-style: disc;
+			display: flex;
+			flex-wrap: wrap;
+			list-style-position: inside;
+			}
+
+		.hotelAmenities li
+			{
+			display: list-item;
+			font-family: 'Graphik-Regular', sans-serif;
+			font-size: 10px;
+			/* flex: 0 50%; */
+			padding-bottom: 5px;
+			}
+
+		.hotelAmenities li:last-child
+			{
+			padding-bottom: 0
+			}
+	</style>
+
+	<script>
+		$(function()
+			{
+			$('input[name="daterange"], #dateButton').daterangepicker(
+				{
+				opens: 'left'
+				});
+
+			// on button.plus click
+			$('.input-stepper button.plus').on('click', function(e)
+				{
+				thisStepper = $(e.target).closest('.input-stepper');
+				stepperInput = thisStepper.find('input');
+
+				// check the input value
+				stepperNumber = stepperInput.val();
+
+				// increment the input value
+				stepperNumber++;
+				stepperInput.val(stepperNumber);
+
+				// then check the stepper number
+				checkStepperNumber(thisStepper);
+				});
+
+			// on button.minus click
+			$('.input-stepper button.minus').on('click', function(e)
+				{
+				thisStepper = $(e.target).closest('.input-stepper');
+				stepperInput = thisStepper.find('input');
+
+				// check the input value
+				stepperNumber = stepperInput.val();
+
+				// decrement the input value
+				stepperNumber--;
+				stepperInput.val(stepperNumber);
+
+				// then check the stepper number
+				checkStepperNumber(thisStepper);
+				});
+
+			// on input field blur
+			$('.input-stepper input').on('blur', function(e)
+				{
+				thisStepper = $(e.target).closest('.input-stepper');
+
+				// check the stepper number
+				checkStepperNumber(thisStepper);
+				});
+
+			function checkStepperNumber(thisStepper)
+				{
+				stepperInput = $(thisStepper).find('input');
+				stepperNumber = stepperInput.val();
+				decrementButton = $(thisStepper).find('button.minus');
+
+				var minimumValue = (thisStepper.attr('id') == 'childrenStepper') ? 0 : 1;
+
+				if (stepperNumber <= minimumValue)
+					{
+					// if so, disable the minus button.
+					decrementButton.prop('disabled', true);
+					stepperInput.val(minimumValue);
+					}
+				else
+					{
+					// if number is positive, enable the minus button
+					decrementButton.prop('disabled', false);
+					}
+				}
+
+			$('.ratePreference').selectric(
+				{
+				inheritOriginalWidth: true,
+				multiple:
+					{
+      				maxLabelEntries: 1
+    				}
+				});
+
+			$('form').submit(function(event)
+				{
+				var searchData =
+					{
+					'location': $('input[name=destination]').val(),
+					'startdate': $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD'),
+					'enddate': $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD'),
+					'numberofrooms': $('input[name=rooms]').val(),
+					'numberofadults': $('input[name=adults]').val()
+					};
+
+				var searchURL = 'https://propertysearch.app.dev.digifabricpcf.com/api/hotel?location=' + searchData.location + '&startdate=' + searchData.startdate + '&enddate=' + searchData.enddate + '&numberofrooms=' + searchData.numberofrooms + '&numberofadults=' + searchData.numberofadults;
+
+				console.log(searchURL);
+				$('#searchResults').empty();
+				$('#searchResults').append('<h3><center>Searching...</center></h3>');
+
+				$.ajax({
+					type: 'GET',
+					url: searchURL,
+					dataType: 'json',
+					encode: true
+					})
+					.done(function(data)
+						{
+						$('#searchResults').empty();
+						console.log(data);
+
+						if (data.length === 0)
+							{
+							$('#searchResults').append('<h1>No Results</h1>');
+							}
+						else
+							{
+							$('#searchResults').append('<h3>' + data.length + ' Hotels Found</h3>');
+
+							$.each(data, function(index)
+								{
+								var allAmenities = '';
+								$.each(data[index].amenities, function(amenityIndex)
+									{
+									allAmenities += '<li>' + data[index].amenities[amenityIndex] + '</li>';
+									});
+
+									console.log(allAmenities);
+
+
+								$('#searchResults').append('<div class="hotelDetails"><div><img class="hotelImage" src="' + data[index].imageURL + '"/></div><div class="hotelInfo"><p class="highlight">' +  data[index].hotelName + '</p><p>Rating: ' + data[index].rating + '</p><p>' + data[index].address.streetName + ' ' + data[index].address.city + ' ' + data[index].address.zipCode + ' ' + data[index].address.country + '</p><p>' + data[index].phones[0] + '</p><ul class="hotelAmenities">' + allAmenities + '</ul></div><div class="hotelPrice"><p style="color:#3f3d3d;font-family:Graphik-Regular,sans-serif;font-weight:400;font-size:11px;line-height:17px;text-transform:uppercase;">From</p><p style="font-family:Graphik-Medium,sans-serif;font-weight:700;font-size:16px;line-height:16px;">' + data[index].roompricinginformations[0].price + ' ' + data[index].roompricinginformations[0].currencyCd + '</p><button class="hotelSelectButton">Select Hotel</button></div>' + '</div>');
+								});
+							}
+						});
+
+        		event.preventDefault();
+				});
+			});
+	</script>
+</head>
+
+<body style="margin:0; padding:0;box-sizing:border-box;background:#f4f2ed;">
+	<div style="padding:10px 20px;background: #3f3d3d;color:#ffffff;font-size: 12px;letter-spacing: .75px;text-transform:uppercase;font-family:Graphik-Regular,sans-serif">
+		<i class="fa fa-phone" style="padding-right:5px;"></i>1 877 424 2449 Need Help?</div>
+
+	<header style="padding:20px;">
+		<img src="./logo.png" style="width:90px;">
+		<nav>
+			<ul>
+				<li>Locations</li>
+				<li>Stay</li>
+				<li>Offers</li>
+				<li>Meetings</li>
+				<li>Our Brands</li>
+				<li>IHG&reg; Rewards Club</li>
+			</ul>
+		</nav>
+	</header>
+
+	<section id="searchSection">
+		<h1>Select a Hotel</h1>
+
+		<form class="searchForm" method="POST">
+			<div class="searchFields">
+				<div class="searchInput" style="width:100%;max-width:500px">
+					<label for="destination">Destination</label>
+					<div class="inputArea">
+						<input id="destination" placeholder="City, Airport, Attraction or Address" name="destination">
+						<i id="dateButton" class="fa fa-map-marker"></i>
+					</div>
+				</div>
+				<div class="inputGroup">
+					<div class="searchInput">
+						<label for="checkin">Check-In / Check-Out</label>
+						<div class="inputArea">
+							<input id="daterange" type="text" name="daterange" placeholder="01/01/2019 - 01/15/2019" />
+							<i id="dateButton" class="fa fa-calendar"></i>
+						</div>
+					</div>
+				</div>
+				<div class="inputGroup">
+					<div class="searchInput">
+						<label for="adults">Adults</label>
+						<div class="input-stepper">
+							<button type="button" class="minus" disabled><i class="fa fa-minus"></i></button>
+							<input id="adults" type="text" value="1" name="adults" readonly/>
+							<button type="button" class="plus"><i class="fa fa-plus"></i></button>
+						</div>
+					</div>
+					<div class="searchInput">
+						<label for="children">Children</label>
+						<div id="childrenStepper" class="input-stepper">
+							<button type="button" class="minus" disabled><i class="fa fa-minus"></i></button>
+							<input id="children" type="text" value="0" name="children" readonly/>
+							<button type="button" class="plus"><i class="fa fa-plus"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="inputGroup">
+					<div class="searchInput">
+						<label for="rooms">Rooms</label>
+						<div class="input-stepper">
+							<button type="button" class="minus" disabled><i class="fa fa-minus"></i></button>
+							<input id="rooms" type="text" value="1" name="rooms" readonly/>
+							<button type="button" class="plus"><i class="fa fa-plus"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="inputGroup">
+					<div class="searchInput">
+						<label for="ratePreference">Rate Preference</label>
+						<select id="ratePreference" name="ratePreference" class="ratePreference" multiple tabindex="-1">
+							<option value="best" select>Best Available **</option>
+							<option value="aaa"> AAA/CAA Rate *</option>
+							<option value="club">Club InterContinental Rate *</option>
+							<option value="entertainment">Entertainment Card *</option>
+							<option value="govCanada">Government Canada *</option>
+							<option value="government">Government/Military Rate *</option>
+							<option value="reward"> Reward Nights *</option>
+							<option value="senior">Senior Discount *</option>
+							<option value="stateGov">State Government-US *</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div>
+				<button id="searchButton" type="submit">Search</button>
+			</div>
+		</form>
+	</section>
+	<section id="searchResults"></section>
+</body>
+
+</html>
