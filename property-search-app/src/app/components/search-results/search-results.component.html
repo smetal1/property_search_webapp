@@ -1,0 +1,58 @@
+<div style="margin-bottom: 9px;" *ngFor='let searchModel of searchModel;'>
+  <div id="main-pannel" class="container" style="height:23%; min-width:90%; max-width:90%; border: 1px solid grey; border-radius: 10px; margin-top: 5px; margin-bottom: 5px; ">
+    <div class="row" *ngIf="searchModel">
+      <div class="col-md-3 col-sm-12 col-xs-12" id="image-div" style="min-height:100%;max-width:100%; padding: 0px;">
+        <div *ngIf="searchModel" style="height:100%;max-width:100%; ">
+          <img height=" 100% " class="imgsrc" width="100% " style="border-top-left-radius: 10px; border-bottom-left-radius: 10px" alt="Image not available "
+            src="{{searchModel.imageURL}} ">
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 col-xs-12" id="mainContent-div " style="min-height:100%;max-width:100%; border-right: 1px solid grey;">
+        <div class="row">
+          <div class="col-md-7 col-sm-12 col-xs-12">
+            <b style="color:#002d72; font-size: 25px;">{{searchModel.hotelName}}</b>
+            <br>
+            <div style="font-size: 14px; color: grey;">
+              <ng-container *ngIf="searchModel.rating">Rating : {{searchModel.rating}}</ng-container>
+              <br> #
+              <ng-container *ngIf="searchModel.address.streetNumber">{{searchModel.address.streetNumber}},</ng-container>
+              <ng-container *ngIf="searchModel.address.streetName">{{searchModel.address.streetName}},</ng-container>
+              <ng-container *ngIf="searchModel.address.city">{{searchModel.address.city}}</ng-container>
+              <br>
+              <ng-container *ngIf="searchModel.address.city">{{searchModel.address.zipCode}} </ng-container>
+              <ng-container *ngIf="searchModel.address.country">{{searchModel.address.country}}</ng-container>
+              <br>
+              <div *ngFor="let phone of searchModel.phones[0] | split">
+                <ng-container *ngIf="searchModel.phones[0]">{{phone}}
+                  <br> </ng-container>
+              </div>
+              <!-- <br>
+              <ng-container *ngIf="searchModel.phones[0]">{{frontdesk}} </ng-container> -->
+
+
+            </div>
+          </div>
+
+          <div class="col-md-5 col-sm-12 col-xs-12" style=" padding-top: 6%; ">
+            <div *ngFor='let item of searchModel.amenities'>
+              <li style="padding: 0; ">{{item}}</li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12" id="priceContent-div " align="center" style="height:100%;max-width:100%;   ">
+        <div class="priceContent">
+          <!-- style="margin-left:40%;margin-top:25%;" -->
+          From
+          <br>
+          <b>{{searchModel.roompricinginformations[0].price}}</b> INR
+          <br>
+          <button class="btn btn-primary">Select Hotel</button>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+</div>

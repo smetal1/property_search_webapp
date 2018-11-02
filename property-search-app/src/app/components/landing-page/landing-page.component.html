@@ -1,0 +1,117 @@
+<div class="form-heading">
+  <h4>Select a Hotel</h4>
+</div>
+
+<div class="container1">
+  <section class="ihg-search-form ">
+    <form class="searchForm" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+      <div class="searchFields">
+        <div class="searchInput search-dest">
+          <label for="destination">Destination</label>
+          <div class="inputArea">
+            <input id="destination" placeholder="City, Airport, Attraction or Address" name="destination" formControlName="destination">
+            <i id="dateButton" class="fa fa-map-marker"></i>
+          </div>
+        </div>
+
+        <div class="inputGroup">
+          <div class="searchInput">
+            <label for="checkin-date">Check-In</label>
+            <div class="inputArea">
+              <input id="checkin-date" [displayMonths]="displayMonths" [navigation]="navigation" [outsideDays]="outsideDays" [showWeekNumbers]="showWeekNumbers"
+                ngbDatepicker #beginDate="ngbDatepicker" type="text" formControlName="checkIn" />
+              <i (click)="beginDate.toggle()" class="fa fa-calendar"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="inputGroup">
+          <div class="searchInput">
+            <label for="checkout-date">Check-Out</label>
+            <div class="inputArea">
+              <input id="checkout-date" [displayMonths]="displayMonths" [navigation]="navigation" [outsideDays]="outsideDays" [showWeekNumbers]="showWeekNumbers"
+                ngbDatepicker #endDate="ngbDatepicker" type="text" formControlName="checkOut" />
+              <i (click)="endDate.toggle()" class="fa fa-calendar"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="inputGroup">
+          <div class="searchInput">
+            <label for="adults">Adults</label>
+            <div class="input-stepper">
+              <button id="mAdult" type="button" class="minus" (click)="decrementAdults()" [disabled]="adults.value <=1">
+                <i class="fa fa-minus"></i>
+              </button>
+              <input id="adults" class="remove-padding" type="text" value="1" name="adults" formControlName="adults" readonly/>
+              <button id="pAdult" type="button" class="plus" (click)="incrementAdults()" [disabled]="adults.value >=20">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="searchInput">
+            <label for="children">Children</label>
+            <div id="childrenStepper" class="input-stepper">
+              <button id="mChildren" type="button" class="minus" (click)="decrementChildren()" [disabled]="children.value <=0">
+                <i class="fa fa-minus"></i>
+              </button>
+              <input id="children" class="remove-padding" type="text" value="0" name="children" formControlName="children" readonly/>
+              <button id="pChildren" type="button" class="plus" (click)="incrementChildren()" [disabled]="children.value >=20">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="inputGroup">
+          <div class="searchInput">
+            <label for="rooms">Rooms</label>
+            <div class="input-stepper">
+              <button id="mRooms" type="button" class="minus" (click)="decrementRooms()" [disabled]="rooms.value <= 1">
+                <i class="fa fa-minus"></i>
+              </button>
+              <input id="rooms" class="remove-padding" type="text" value="1" name="rooms" formControlName="rooms" readonly/>
+              <button id="pRooms" type="button" class="plus" (click)="incrementRooms()" [disabled]="rooms.value >=9">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="inputGroup">
+          <div class="searchInput">
+            <label for="ratePreference">Rate Preference</label>
+            <select id="ratePreference" name="ratePreference" class="ratePreference" multiple tabindex="-1">
+              <option value="best" select>Best Available **</option>
+              <option value="aaa"> AAA/CAA Rate *</option>
+              <option value="club">Club InterContinental Rate *</option>
+              <option value="entertainment">Entertainment Card *</option>
+              <option value="govCanada">Government Canada *</option>
+              <option value="government">Government/Military Rate *</option>
+              <option value="reward"> Reward Nights *</option>
+              <option value="senior">Senior Discount *</option>
+              <option value="stateGov">State Government-US *</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="min-width: 100%;" *ngIf="checkDates()>0">
+        <p align="center" style="color:red;margin: auto;">CheckIn Date should be less than CheckOut Date</p>
+      </div>
+      <br>
+      <div>
+        <button id="searchButton" type="submit" [disabled]="checkDates()>0 || destination.value == ''">Search</button>
+      </div>
+    </form>
+  </section>
+
+  <div *ngIf="checkResultsStatus==1">
+    <app-search-results [searchModel]="searchModel"></app-search-results>
+  </div>
+  <div class="check-results" *ngIf='checkResultsStatus != 1'>
+    <div align="center" *ngIf="checkResultsStatus==0">
+      <b>Searching...</b>
+    </div>
+    <div *ngIf="checkResultsStatus==2">
+      <h4>No Results</h4>
+    </div>
+  </div>
